@@ -1,0 +1,6 @@
+{
+  "name": "GreenTree Arboriculture - Voice AI & CRM Operations Hub",
+  "description": "GreenTree Arboriculture Management voice-to-text intelligence & CRM operations hub powered by Arb-E. Ingests calls, voicemails, tree hazard assessments (ANSI Z133), and syncs leads in real-time.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

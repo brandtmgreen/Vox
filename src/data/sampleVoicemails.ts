@@ -1,0 +1,318 @@
+import { Voicemail, Contact, Lead, Activity, VoiceLeadIntakePayload } from '../types/crm';
+
+export const INITIAL_LEADS: Lead[] = [
+  {
+    id: 'LEAD-VOICE-8X92B',
+    clientName: 'David Patterson',
+    email: 'dpatterson72@gmail.com',
+    phone: '(706) 555-0144',
+    address: '412 River Road, Columbus, GA 31904',
+    serviceType: 'Emergency',
+    status: 'LEAD',
+    createdAt: '2026-10-31T09:12:00Z',
+    urgency: 'Emergency',
+    estimatedValue: 3500,
+    treeSpecies: ['Southern Red Oak'],
+    treeCount: 1,
+    hazards: {
+      overhead: true,
+      structures: true,
+      traffic: false,
+      underground: false,
+      details: 'Limb hung up on electrical service drop wire and resting on garage roof.'
+    },
+    summary: 'Emergency storm damage: Heavy red oak limb snapped, resting on garage roof and hanging over main electrical service drop.',
+    callType: 'VOICEMAIL',
+  },
+  {
+    id: 'LEAD-VOICE-3M41A',
+    clientName: 'Sarah Jenkins',
+    email: 'sarah.j@example.com',
+    phone: '(706) 555-0188',
+    address: '1420 Wynnton Rd, Columbus, GA',
+    serviceType: 'Pruning',
+    status: 'LEAD',
+    createdAt: '2026-10-31T08:30:00Z',
+    urgency: 'Medium',
+    estimatedValue: 2850,
+    treeSpecies: ['Live Oak'],
+    treeCount: 3,
+    hazards: {
+      overhead: true,
+      structures: false,
+      traffic: true,
+      underground: false,
+      details: 'Overhead utility wires touching branches; overhang over driveway & street.'
+    },
+    summary: 'ISA pruning estimate for three mature live oaks with low dead branches touching utility drop and driveway.',
+    callType: 'INBOUND_CALL',
+  },
+  {
+    id: 'LEAD-VOICE-9K12C',
+    clientName: 'Marcus Vance',
+    email: 'm.vance@broadstproperties.com',
+    phone: '(334) 555-0199',
+    address: '802 Broad St, Phenix City, AL',
+    serviceType: 'Removal',
+    status: 'LEAD',
+    createdAt: '2026-10-30T16:45:00Z',
+    urgency: 'High',
+    estimatedValue: 2400,
+    treeSpecies: ['Loblolly Pine'],
+    treeCount: 1,
+    hazards: {
+      overhead: false,
+      structures: true,
+      traffic: false,
+      underground: false,
+      details: 'Hazardous cracked pine leaning 45 degrees over neighbor property line fence.'
+    },
+    summary: 'Hazardous cracked 50ft pine in backyard leaning 45 degrees towards neighbor fence.',
+    callType: 'VOICEMAIL',
+  }
+];
+
+export const INITIAL_CONTACTS: Contact[] = [
+  {
+    id: 'cnt_david_01',
+    name: 'David Patterson',
+    contactPerson: 'David Patterson',
+    email: 'dpatterson72@gmail.com',
+    phone: '(706) 555-0144',
+    serviceAddress: '412 River Road, Columbus, GA 31904',
+    billingAddress: '412 River Road, Columbus, GA 31904',
+    isServiceAddressDifferent: false,
+    customerType: 'Residential',
+    notes: '[Initial VOICEMAIL on 10/31]: Emergency storm damage: Heavy red oak limb snapped, resting on garage roof and hanging over main electrical service drop.\nGate latch located on left side of driveway.',
+    petAlerts: undefined,
+    specialInstructions: 'Gate latch located on left side of driveway',
+    hazardAlerts: 'Power lines & garage roof within fall zone',
+    privacyLevel: 'Standard',
+    createdAt: '2026-10-24T14:20:00Z',
+    updatedAt: '2026-10-31T09:12:00Z',
+    userId: 'Arb-E Voice Agent',
+    totalInquiries: 2,
+    status: 'Emergency Priority',
+  },
+  {
+    id: 'cnt_sarah_02',
+    name: 'Sarah Jenkins',
+    contactPerson: 'Sarah Jenkins',
+    email: 'sarah.j@example.com',
+    phone: '(706) 555-0188',
+    serviceAddress: '1420 Wynnton Rd, Columbus, GA',
+    customerType: 'Residential',
+    notes: '[Initial INBOUND_CALL on 10/31]: Looking to get an ISA pruning estimate for three large live oaks.',
+    hazardAlerts: 'Utility lines running through west canopy',
+    privacyLevel: 'Standard',
+    createdAt: '2026-10-28T10:15:00Z',
+    userId: 'Arb-E Voice Agent',
+    totalInquiries: 1,
+    status: 'Active Lead',
+  },
+  {
+    id: 'cnt_marcus_03',
+    name: 'Marcus Vance',
+    contactPerson: 'Marcus Vance',
+    email: 'm.vance@broadstproperties.com',
+    phone: '(334) 555-0199',
+    serviceAddress: '802 Broad St, Phenix City, AL',
+    customerType: 'Commercial',
+    notes: '[Initial VOICEMAIL on 10/30]: 50-foot cracked pine in backyard leaning 45 degrees towards neighbor fence.',
+    hazardAlerts: 'Neighbor fence & carport in fall zone',
+    privacyLevel: 'Standard',
+    createdAt: '2026-10-30T11:00:00Z',
+    userId: 'Arb-E Voice Agent',
+    totalInquiries: 1,
+    status: 'Emergency Priority',
+  }
+];
+
+export const INITIAL_ACTIVITIES: Activity[] = [
+  {
+    id: 'act-001',
+    type: 'LEAD',
+    message: 'Arb-E Voice Agent logged new Emergency lead for David Patterson at 412 River Road (Emergency Priority).',
+    timestamp: '2026-10-31T09:12:05Z',
+    user: 'Arb-E Voice Agent',
+  },
+  {
+    id: 'act-002',
+    type: 'LEAD',
+    message: 'Arb-E Voice Agent logged new Pruning lead for Sarah Jenkins at 1420 Wynnton Rd (Medium Priority).',
+    timestamp: '2026-10-31T08:30:10Z',
+    user: 'Arb-E Voice Agent',
+  },
+  {
+    id: 'act-003',
+    type: 'SYSTEM',
+    message: 'GreenTree ArborLink Voice AI Dispatcher initialized. Arb-E listening for calls & voicemails.',
+    timestamp: '2026-10-31T08:00:00Z',
+    user: 'Arb-E Voice Agent',
+  }
+];
+
+export const INITIAL_VOICEMAILS: Voicemail[] = [
+  {
+    id: 'vm-seed-01',
+    callId: 'CA-98124901284-TWILIO',
+    callType: 'VOICEMAIL',
+    callerNumber: '(706) 555-0144',
+    callerCallerIdName: 'David Patterson',
+    receivedAt: '2026-10-31T09:11:45Z',
+    durationSeconds: 34,
+    audioDurationFormatted: '0:34',
+    status: 'synced',
+    transcript: "Hi, this is David Patterson at 412 River Road. We had a storm blow through last night and a massive red oak branch snapped. It's hanging directly over our power drop and resting on the garage roof. Please call me back at 706-555-0144 as soon as someone is awake. We have a gate latch on the left.",
+    transcriptSegments: [
+      { timestamp: '0:00', speaker: 'David Patterson', text: 'Hi, this is David Patterson at 412 River Road. We had a storm blow through last night and a massive red oak branch snapped.' },
+      { timestamp: '0:12', speaker: 'David Patterson', text: "It's hanging directly over our power drop and resting on the garage roof." },
+      { timestamp: '0:22', speaker: 'David Patterson', text: 'Please call me back at 706-555-0144 as soon as someone is awake. We have a gate latch on the left.' }
+    ],
+    confidenceScore: 99,
+    synced: true,
+    syncedAt: '2026-10-31T09:12:05Z',
+    leadId: 'LEAD-VOICE-8X92B',
+    contactId: 'cnt_david_01',
+    emergencyAlertTriggered: true,
+    payload: {
+      callId: 'CA-98124901284-TWILIO',
+      callType: 'VOICEMAIL',
+      callerPhone: '(706) 555-0144',
+      clientName: 'David Patterson',
+      email: 'dpatterson72@gmail.com',
+      address: '412 River Road, Columbus, GA 31904',
+      serviceType: 'Emergency',
+      urgency: 'Emergency',
+      rawTranscript: "Hi, this is David Patterson at 412 River Road. We had a storm blow through last night and a massive red oak branch snapped. It's hanging directly over our power drop and resting on the garage roof. Please call me back at 706-555-0144 as soon as someone is awake. We have a gate latch on the left.",
+      aiSummary: 'Emergency storm damage: Heavy red oak limb snapped, resting on garage roof and hanging over main electrical service drop.',
+      treeSpecies: ['Southern Red Oak'],
+      treeCount: 1,
+      hazards: {
+        overhead: true,
+        structures: true,
+        traffic: false,
+        underground: false,
+        details: 'Limb hung up on electrical service drop wire and resting on garage roof.'
+      },
+      accessNotes: 'Gate latch located on left side of driveway',
+    }
+  },
+  {
+    id: 'vm-seed-02',
+    callId: 'CA-44910283100-TWILIO',
+    callType: 'INBOUND_CALL',
+    callerNumber: '(706) 555-0188',
+    callerCallerIdName: 'Sarah Jenkins',
+    receivedAt: '2026-10-31T08:29:10Z',
+    durationSeconds: 28,
+    audioDurationFormatted: '0:28',
+    status: 'synced',
+    transcript: "Hello Arb-E, this is Sarah Jenkins at 1420 Wynnton Rd in Columbus. I have three large live oaks with low dead branches touching my utility lines and driveway. Looking to get an ISA pruning estimate and canopy elevation.",
+    transcriptSegments: [
+      { timestamp: '0:00', speaker: 'Sarah Jenkins', text: 'Hello Arb-E, this is Sarah Jenkins at 1420 Wynnton Rd in Columbus.' },
+      { timestamp: '0:12', speaker: 'Sarah Jenkins', text: 'I have three large live oaks with low dead branches touching my utility lines and driveway.' },
+      { timestamp: '0:20', speaker: 'Sarah Jenkins', text: 'Looking to get an ISA pruning estimate and canopy elevation.' }
+    ],
+    confidenceScore: 98,
+    synced: true,
+    syncedAt: '2026-10-31T08:30:10Z',
+    leadId: 'LEAD-VOICE-3M41A',
+    contactId: 'cnt_sarah_02',
+    payload: {
+      callType: 'INBOUND_CALL',
+      callerPhone: '(706) 555-0188',
+      clientName: 'Sarah Jenkins',
+      email: 'sarah.j@example.com',
+      address: '1420 Wynnton Rd, Columbus, GA',
+      serviceType: 'Pruning',
+      urgency: 'Medium',
+      rawTranscript: 'Hello Arb-E, I have three large live oaks with low dead branches touching my utility lines and driveway. Looking to get an ISA pruning estimate.',
+      aiSummary: 'Pruning estimate for 3 live oaks with low dead branches touching utility drop and driveway.',
+      treeSpecies: ['Live Oak'],
+      treeCount: 3,
+      hazards: {
+        overhead: true,
+        structures: false,
+        traffic: true,
+        details: 'Low dead branches touching overhead utility wires over driveway.'
+      }
+    }
+  },
+  {
+    id: 'vm-seed-03',
+    callId: 'CA-10293819284-TELNYX',
+    callType: 'VOICEMAIL',
+    callerNumber: '(334) 555-0199',
+    callerCallerIdName: 'Marcus Vance',
+    receivedAt: '2026-10-30T16:44:00Z',
+    durationSeconds: 31,
+    audioDurationFormatted: '0:31',
+    status: 'synced',
+    transcript: "Hey GreenTree team. This is Marcus Vance on 334-555-0199. Storm cracked a 50 foot loblolly pine in my backyard at 802 Broad St, Phenix City. It is leaning at 45 degrees towards the neighbor fence. Please get someone out today before the wind picks up.",
+    transcriptSegments: [
+      { timestamp: '0:00', speaker: 'Marcus Vance', text: 'Hey GreenTree team. This is Marcus Vance on 334-555-0199.' },
+      { timestamp: '0:10', speaker: 'Marcus Vance', text: 'Storm cracked a 50 foot loblolly pine in my backyard at 802 Broad St, Phenix City.' },
+      { timestamp: '0:20', speaker: 'Marcus Vance', text: 'It is leaning at 45 degrees towards the neighbor fence. Please get someone out today before the wind picks up.' }
+    ],
+    confidenceScore: 97,
+    synced: true,
+    syncedAt: '2026-10-30T16:45:00Z',
+    leadId: 'LEAD-VOICE-9K12C',
+    contactId: 'cnt_marcus_03',
+    payload: {
+      callType: 'VOICEMAIL',
+      callerPhone: '(334) 555-0199',
+      clientName: 'Marcus Vance',
+      email: 'm.vance@broadstproperties.com',
+      address: '802 Broad St, Phenix City, AL',
+      serviceType: 'Removal',
+      urgency: 'High',
+      rawTranscript: 'Hey GreenTree team. Storm cracked a 50 foot pine in my backyard. It is leaning at 45 degrees towards the neighbor fence. Please get someone out today.',
+      aiSummary: 'Hazardous cracked pine leaning 45 degrees over neighbor property line fence.',
+      treeSpecies: ['Loblolly Pine'],
+      treeCount: 1,
+      hazards: {
+        overhead: false,
+        structures: true,
+        details: 'Cracked pine leaning over neighbor property fence.'
+      }
+    }
+  }
+];
+
+export const UNPROCESSED_ARBOR_SCENARIOS = [
+  {
+    id: 'scen-pecan-rot',
+    title: 'Heritage Pecan Tree Health & Decay Consulting',
+    callerName: 'Martha Jenkins',
+    company: 'Jenkins Farmstead',
+    callerPhone: '(706) 555-0177',
+    address: '3814 Macon Rd, Columbus, GA',
+    serviceType: 'Consulting' as const,
+    urgency: 'Medium' as const,
+    transcript: "Good morning GreenTree. This is Martha Jenkins calling about our historic 80-year-old Pecan tree at 3814 Macon Road. We noticed large shelf mushrooms and fungal conks growing near the root flare and hollow cavities forming on the east trunk. We love this tree and want an ISA certified arborist health assessment before considering removal. Please reach me at martha.j@farmstead.org or 706-555-0177. Two friendly dogs in the side yard.",
+  },
+  {
+    id: 'scen-crepe-prune',
+    title: 'Commercial HOA Crepe Myrtle & Magnolia Pruning',
+    callerName: 'Robert Sterling',
+    company: 'Oakridge HOA Estates',
+    callerPhone: '(706) 555-0133',
+    address: '5500 Whittlesey Blvd, Columbus, GA',
+    serviceType: 'Pruning' as const,
+    urgency: 'Low' as const,
+    transcript: "Hi Arb-E, Robert Sterling here representing Oakridge HOA along Whittlesey Blvd. We have twelve Crepe Myrtles and four Southern Magnolias bordering our community entrance that need dormant winter pruning and deadwood removal. No overhead power lines, wide curb access. You can email the proposal to board@oakridgehoa.com or call 706-555-0133. Thanks!",
+  },
+  {
+    id: 'scen-emergency-uproot',
+    title: 'Severe Thunderstorm Uprooted Sweetgum Blocking Driveway',
+    callerName: 'Elena Rostova',
+    company: 'Rostova Residence',
+    callerPhone: '(334) 555-0162',
+    address: '1904 Summerville Rd, Phenix City, AL',
+    serviceType: 'Emergency' as const,
+    urgency: 'Emergency' as const,
+    transcript: "Emergency dispatch needed! This is Elena Rostova on Summerville Road. High winds uprooted a 40-foot Sweetgum tree completely out of the ground. The root ball broke through our water line and the crown is resting across our main driveway. We are completely blocked in! Call me immediately at 334-555-0162. Water is currently shut off at the street.",
+  }
+];

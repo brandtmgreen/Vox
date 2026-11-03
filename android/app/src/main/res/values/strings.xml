@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GreenTree ArborLink</string>
+    <string name="title_activity_main">GreenTree ArborLink</string>
+    <string name="package_name">com.greentree.arborlink</string>
+    <string name="custom_url_scheme">com.greentree.arborlink</string>
+</resources>
