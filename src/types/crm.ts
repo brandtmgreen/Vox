@@ -10,7 +10,7 @@ export type CustomerType = 'Residential' | 'Commercial' | 'Municipal' | 'HOA';
 export type CallType = 'INBOUND_CALL' | 'VOICEMAIL' | 'SMS_INQUIRY';
 
 export interface TreeHazards {
-  overhead: boolean;      // ANSI Z133 Electrical / Power lines
+  overhead: boolean;      // Utility / Power lines nearby (for arborist inspection)
   structures: boolean;    // Houses, roofs, sheds, carports, fences in fall zone
   traffic: boolean;       // Road overhang, traffic flagging required
   underground: boolean;   // Septic, irrigation, gas utilities

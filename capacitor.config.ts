@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.greentree.arborlink',
-  appName: 'GreenTree ArborLink',
+  appId: 'com.greentree.frontdesk',
+  appName: 'GreenTree Front Desk',
   webDir: 'dist',
   server: {
     androidScheme: 'https',

@@ -186,16 +186,16 @@ export const VoicemailPlayer: React.FC<VoicemailPlayerProps> = ({
         </div>
       </div>
 
-      {/* Emergency Tree Damage Safety Banner (Section 2 of Spec) */}
+      {/* Priority Customer Note Banner */}
       {(isEmergency || hasOverheadHazard) && (
-        <div className="bg-rose-50 border-y border-rose-200 p-3 px-5 flex items-start gap-2.5 text-xs text-rose-900">
-          <ShieldAlert className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+        <div className="bg-amber-50 border-y border-amber-200 p-3 px-5 flex items-start gap-2.5 text-xs text-amber-900">
+          <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
           <div>
-            <span className="font-extrabold uppercase tracking-wide text-rose-950 block">
-              ANSI Z133 Electrical Hazard Triage Warning
+            <span className="font-extrabold uppercase tracking-wide text-amber-950 block">
+              Front Desk Note: Utility / Structure Contact Mentioned
             </span>
             <p className="leading-snug">
-              If any tree limb is touching or near active utility wires, please stand clear by at least 35 feet and contact Georgia Power / Alabama Power immediately.
+              Caller noted tree branches near utility wires or structures. Flagged for field arborist on-site assessment upon dispatch.
             </p>
           </div>
         </div>

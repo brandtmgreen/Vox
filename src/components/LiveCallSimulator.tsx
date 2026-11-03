@@ -206,9 +206,9 @@ export const LiveCallSimulator: React.FC<LiveCallSimulatorProps> = ({
               <TreeDeciduous className="w-8 h-8 animate-spin" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Arb-E Classifying Hazards &amp; Ingesting Lead</h3>
+              <h3 className="text-base font-bold text-white">Arb-E Capturing Data &amp; Generating Lead</h3>
               <p className="text-xs text-stone-400 max-w-xs mt-1">
-                Parsing ANSI Z133 power line risks, structures, species, and dispatching crew notification...
+                Parsing caller details, requested service, property access notes, and queuing for workflow handoff...
               </p>
             </div>
           </div>
@@ -222,14 +222,14 @@ export const LiveCallSimulator: React.FC<LiveCallSimulatorProps> = ({
             <div>
               <h3 className="text-lg font-black text-white">Lead Ingested into GreenTree CRM!</h3>
               <p className="text-xs text-stone-300 max-w-xs mt-1">
-                Arb-E generated Lead for "{scenario.callerName}" with ANSI Z133 safety flags. Earcon chime triggered.
+                Arb-E generated Lead for "{scenario.callerName}" ready for GreenTree Arboriculture Management workflow handoff.
               </p>
             </div>
             <button
               onClick={onClose}
               className="w-full py-3 px-4 rounded-xl bg-[#5FA136] hover:bg-[#528d2e] text-white font-bold text-xs flex items-center justify-center gap-2 transition-all mt-4"
             >
-              <span>View Ingested Lead &amp; Safety Report</span>
+              <span>View Ingested Lead &amp; Workflow Queue</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

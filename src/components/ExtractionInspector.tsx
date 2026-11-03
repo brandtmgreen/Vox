@@ -44,9 +44,9 @@ export const ExtractionInspector: React.FC<ExtractionInspectorProps> = ({
     return (
       <div className="bg-white rounded-2xl border border-stone-200 p-8 text-center flex flex-col items-center justify-center h-full min-h-[320px]">
         <ArbEAvatar className="w-12 h-12 mb-3" />
-        <h3 className="font-bold text-[#4D2809] text-base mb-1">Arb-E Extraction Ready</h3>
+        <h3 className="font-bold text-[#4D2809] text-base mb-1">Front Desk Intake Ready</h3>
         <p className="text-xs text-stone-600 max-w-sm mb-4">
-          Click "Extract &amp; Ingest Lead" to parse customer details, tree species, and ANSI Z133 safety hazards.
+          Click "Extract &amp; Ingest Lead" to parse customer contact details, service requested, and property access notes.
         </p>
       </div>
     );
@@ -79,8 +79,8 @@ export const ExtractionInspector: React.FC<ExtractionInspectorProps> = ({
         <div className="flex items-center gap-2.5">
           <ArbEAvatar className="w-8 h-8" />
           <div>
-            <h3 className="font-bold text-sm text-[#4D2809]">Arborist Intelligence (Arb-E)</h3>
-            <p className="text-[11px] text-[#5FA136] font-semibold">ANSI Z133 Safety Extraction &amp; CRM Sync</p>
+            <h3 className="font-bold text-sm text-[#4D2809]">Front Desk Data Capture (Arb-E)</h3>
+            <p className="text-[11px] text-[#5FA136] font-semibold">Lead Qualification &amp; Workflow Forwarding</p>
           </div>
         </div>
 
@@ -234,27 +234,27 @@ export const ExtractionInspector: React.FC<ExtractionInspectorProps> = ({
           </p>
         </div>
 
-        {/* ANSI Z133 Safety & Hazard Assessment (JSHA) */}
+        {/* Front Desk Property & Site Notes (For Arborist On-Site Assessment) */}
         <div className="p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-amber-600" />
+              <Building2 className="w-4 h-4 text-[#376E20]" />
               <h4 className="font-bold text-xs uppercase tracking-wider text-[#4D2809]">
-                ANSI Z133 Job Safety &amp; Hazard Assessment (JSHA)
+                Front Desk Property &amp; Site Notes
               </h4>
             </div>
             <span className="text-[10px] font-bold text-stone-500 uppercase bg-stone-100 px-2 py-0.5 rounded">
-              Tree Safety Standard
+              Forward to Field Arborist
             </span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
             {/* Overhead Wires */}
             <div className={`p-2.5 rounded-lg border flex items-center gap-2 ${
-              hazards.overhead ? 'bg-rose-50 border-rose-200 text-rose-900 font-bold' : 'bg-stone-50 border-stone-100 text-stone-400'
+              hazards.overhead ? 'bg-amber-50 border-amber-200 text-amber-900 font-bold' : 'bg-stone-50 border-stone-100 text-stone-400'
             }`}>
-              <Zap className={`w-4 h-4 ${hazards.overhead ? 'text-rose-600' : 'text-stone-300'}`} />
-              <span>Overhead Wires: {hazards.overhead ? 'YES' : 'No'}</span>
+              <Zap className={`w-4 h-4 ${hazards.overhead ? 'text-amber-600' : 'text-stone-300'}`} />
+              <span>Wires Noted: {hazards.overhead ? 'Yes' : 'None'}</span>
             </div>
 
             {/* Structures */}
@@ -262,39 +262,21 @@ export const ExtractionInspector: React.FC<ExtractionInspectorProps> = ({
               hazards.structures ? 'bg-amber-50 border-amber-200 text-amber-900 font-bold' : 'bg-stone-50 border-stone-100 text-stone-400'
             }`}>
               <Home className={`w-4 h-4 ${hazards.structures ? 'text-amber-600' : 'text-stone-300'}`} />
-              <span>Structures in Zone: {hazards.structures ? 'YES' : 'No'}</span>
+              <span>Near Buildings: {hazards.structures ? 'Yes' : 'No'}</span>
             </div>
 
-            {/* Traffic */}
+            {/* Traffic / Driveway */}
             <div className={`p-2.5 rounded-lg border flex items-center gap-2 ${
               hazards.traffic ? 'bg-amber-50 border-amber-200 text-amber-900 font-bold' : 'bg-stone-50 border-stone-100 text-stone-400'
             }`}>
               <Car className={`w-4 h-4 ${hazards.traffic ? 'text-amber-600' : 'text-stone-300'}`} />
-              <span>Traffic / Street: {hazards.traffic ? 'YES' : 'No'}</span>
-            </div>
-
-            {/* Underground */}
-            <div className={`p-2.5 rounded-lg border flex items-center gap-2 ${
-              hazards.underground ? 'bg-blue-50 border-blue-200 text-blue-900 font-bold' : 'bg-stone-50 border-stone-100 text-stone-400'
-            }`}>
-              <Droplet className={`w-4 h-4 ${hazards.underground ? 'text-blue-600' : 'text-stone-300'}`} />
-              <span>Underground Utility: {hazards.underground ? 'YES' : 'No'}</span>
-            </div>
-
-            {/* Steep Terrain */}
-            <div className={`p-2.5 rounded-lg border flex items-center gap-2 ${
-              hazards.steepTerrain ? 'bg-purple-50 border-purple-200 text-purple-900 font-bold' : 'bg-stone-50 border-stone-100 text-stone-400'
-            }`}>
-              <Mountain className={`w-4 h-4 ${hazards.steepTerrain ? 'text-purple-600' : 'text-stone-300'}`} />
-              <span>Steep Terrain: {hazards.steepTerrain ? 'YES' : 'No'}</span>
+              <span>Street/Driveway: {hazards.traffic ? 'Yes' : 'No'}</span>
             </div>
           </div>
 
-          {hazards.details && (
-            <p className="text-[11px] text-stone-600 bg-stone-50 p-2.5 rounded-lg border border-stone-100 font-mono">
-              Hazard Details: {hazards.details}
-            </p>
-          )}
+          <p className="text-[11px] text-stone-600 bg-[#F9FAF6] p-2.5 rounded-lg border border-stone-100">
+            <strong>Desk Note for Arborist:</strong> {hazards.overhead ? 'Customer mentioned limbs near utility drop. Field arborist should perform on-site distance check.' : 'Standard residential yard access.'}
+          </p>
         </div>
 
         {/* Site Access & Pet Warnings */}

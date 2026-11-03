@@ -65,9 +65,9 @@ export const AndroidFrame: React.FC<AndroidFrameProps> = ({
           <div className="bg-stone-900 text-stone-200 px-4 py-2 flex items-center justify-between text-xs border-b border-stone-800 shadow-sm z-30">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="font-semibold text-white">GreenTree ArborLink Operations Hub</span>
+              <span className="font-semibold text-white">GreenTree Front Desk</span>
               <span className="text-stone-400">|</span>
-              <span className="text-emerald-400 font-mono text-[11px]">Android PWA &amp; TWA Enabled</span>
+              <span className="text-emerald-400 font-mono text-[11px]">Voice Intake &amp; Lead Generation</span>
             </div>
 
             <div className="flex items-center gap-2">
@@ -125,7 +125,7 @@ export const AndroidFrame: React.FC<AndroidFrameProps> = ({
             onClick={onOpenApkModal}
             className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition-colors shadow-xs"
           >
-            APK Setup
+            Play Store &amp; APK
           </button>
         </div>
       </div>
@@ -175,7 +175,7 @@ export const AndroidFrame: React.FC<AndroidFrameProps> = ({
 
       {/* Simulator Caption */}
       <p className="mt-3 text-stone-500 text-xs text-center">
-        Android PWA &amp; TWA preview • Touch responsive • ANSI Z133 Real-time Safety Triage
+        GreenTree Front Desk • Phone Intake &amp; Lead Forwarding to Field Workflow
       </p>
     </div>
   );

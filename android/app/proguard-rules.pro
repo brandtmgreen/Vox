@@ -1,21 +1,29 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# GreenTree ArborLink - ProGuard / R8 Optimization Rules for Google Play Store
+# Preserves Capacitor, WebKit JavaScript interfaces, and AndroidX native bridges
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# 1. Capacitor Core & Plugins
+-keep class com.getcapacitor.** { *; }
+-keep interface com.getcapacitor.** { *; }
+-keep class com.greentree.arborlink.** { *; }
+-keep public class * extends com.getcapacitor.Plugin
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# 2. JavaScript Interface preservation for WebView
+-keepattributes JavascriptInterface
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# 3. AndroidX SplashScreen & AppCompat
+-keep class androidx.core.splashscreen.** { *; }
+-dontwarn androidx.core.splashscreen.**
+-keep class androidx.appcompat.** { *; }
+
+# 4. Retain attributes for Google Play Vitals / Crashlytics stack trace demangling
+-keepattributes SourceFile,LineNumberTable
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses,EnclosingMethod
+
+# 5. Cordova / Capacitor Plugins Reflection
+-keep class org.apache.cordova.** { *; }
+-dontwarn org.apache.cordova.**

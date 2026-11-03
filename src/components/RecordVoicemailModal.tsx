@@ -198,7 +198,7 @@ export const RecordVoicemailModal: React.FC<RecordVoicemailModalProps> = ({
                 </button>
                 <p className="font-bold text-[#4D2809]">Tap to Start Speaking</p>
                 <p className="text-stone-500 text-[11px] max-w-xs">
-                  Leave a tree service request. Arb-E will transcribe details, check ANSI Z133 safety hazards, and update GreenTree CRM.
+                  Leave a tree service inquiry. Arb-E will transcribe details, capture caller data, and forward the lead to GreenTree Arboriculture Management workflow.
                 </p>
               </div>
             )}
@@ -262,7 +262,7 @@ export const RecordVoicemailModal: React.FC<RecordVoicemailModalProps> = ({
               >
                 <div className="flex items-center justify-between">
                   <span className="font-extrabold text-xs">⚡ David Patterson (Emergency Storm Damage)</span>
-                  <span className="text-[10px] font-bold bg-rose-200 text-rose-900 px-1.5 py-0.5 rounded">Z133 Power Drop</span>
+                  <span className="text-[10px] font-bold bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded">Priority Storm Lead</span>
                 </div>
                 <span className="text-[11px] text-rose-800 line-clamp-1 mt-0.5">Red oak snapped on garage roof over service drop</span>
               </button>

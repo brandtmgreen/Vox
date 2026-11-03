@@ -26,7 +26,7 @@ test('processCustomerCallTurn extracts name and address', () => {
   assert.ok(result.updatedState.percentComplete > state.percentComplete);
 });
 
-test('processCustomerCallTurn immediately triggers ANSI Z133 safety warning for power lines', () => {
+test('processCustomerCallTurn immediately flags power lines as urgent for arborist', () => {
   const state = createInitialCallState('(706) 555-0144');
   state.clientName = 'David Patterson';
   state.address = '412 River Road, Columbus, GA';
@@ -40,8 +40,7 @@ test('processCustomerCallTurn immediately triggers ANSI Z133 safety warning for 
   assert.equal(result.updatedState.hazards.overhead, true);
   assert.equal(result.updatedState.isEmergency, true);
   assert.equal(result.updatedState.urgency, 'Emergency');
-  assert.ok(result.arbEReply.includes('35 feet'));
-  assert.ok(result.arbEReply.includes('Georgia Power or Alabama Power'));
+  assert.ok(result.arbEReply.includes('field arborist') || result.arbEReply.includes('urgent note'));
 });
 
 test('processCustomerCallTurn reaches confirmed step when all data is gathered', () => {

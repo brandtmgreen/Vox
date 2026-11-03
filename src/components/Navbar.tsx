@@ -8,11 +8,12 @@ import {
   Activity, 
   Inbox, 
   PlusCircle, 
-  Radio,
-  FileCode,
-  TreeDeciduous,
-  Zap,
-  Smartphone
+  Radio, 
+  FileCode, 
+  TreeDeciduous, 
+  Zap, 
+  Smartphone,
+  Send
 } from 'lucide-react';
 import { GreenTreeCanopyIcon, ArbEAvatar } from './GreenTreeLogos';
 
@@ -72,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 GREENTREE
               </span>
               <span className="font-extrabold text-xs tracking-widest text-[#5FA136] bg-[#5FA136]/10 px-2 py-0.5 rounded-md uppercase">
-                ARBORICULTURE
+                FRONT DESK
               </span>
               <button
                 onClick={onToggleAutoAnswer}
@@ -88,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             </div>
             <p className="text-xs text-stone-600 font-medium hidden sm:block">
-              Columbus, GA &amp; Phenix City, AL • ISA Certified Arborists • Safety Standard ANSI Z133
+              Columbus, GA &amp; Phenix City, AL • Voice Intake &amp; Lead Generation for GreenTree Arboriculture Management
             </p>
           </div>
         </div>
@@ -101,16 +102,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
           <div className="w-px h-6 bg-stone-200" />
           <div>
-            <span className="text-stone-400 block text-[10px] uppercase font-bold tracking-wider">Z133 Hazards</span>
-            <span className="font-bold text-amber-700 text-sm flex items-center gap-1">
-              <Zap className="w-3.5 h-3.5 text-amber-500" />
-              {hazardCount} Active
+            <span className="text-stone-400 block text-[10px] uppercase font-bold tracking-wider">Workflow Handoff</span>
+            <span className="font-bold text-[#376E20] text-sm flex items-center gap-1">
+              <Send className="w-3.5 h-3.5 text-[#5FA136]" />
+              {leadCount} Leads Queued
             </span>
           </div>
           <div className="w-px h-6 bg-stone-200" />
           <div>
-            <span className="text-stone-400 block text-[10px] uppercase font-bold tracking-wider">Voice Answering</span>
-            <span className="font-bold text-[#5FA136] text-sm">Arb-E 🐒 Live Conversational</span>
+            <span className="text-stone-400 block text-[10px] uppercase font-bold tracking-wider">Front Desk AI</span>
+            <span className="font-bold text-[#5FA136] text-sm">Arb-E 🐒 Live Receptionist</span>
           </div>
         </div>
 
@@ -253,17 +254,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onTabChange('hazards')}
             className={`flex items-center gap-2 py-2 px-3 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
               activeTab === 'hazards'
-                ? 'bg-amber-100 text-amber-900'
+                ? 'bg-[#376E20]/15 text-[#376E20]'
                 : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100'
             }`}
           >
-            <ShieldAlert className="w-4 h-4 text-amber-600" />
-            <span>ANSI Z133 Hazards (JSHA)</span>
-            {hazardCount > 0 && (
-              <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white">
-                {hazardCount}
-              </span>
-            )}
+            <Send className="w-4 h-4 text-[#376E20]" />
+            <span>Forward to Field Workflow</span>
+            <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+              activeTab === 'hazards' ? 'bg-[#5FA136] text-white' : 'bg-stone-200 text-stone-700'
+            }`}>
+              {leadCount}
+            </span>
           </button>
 
           <button

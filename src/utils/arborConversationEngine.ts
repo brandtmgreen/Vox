@@ -75,7 +75,7 @@ export function processCustomerCallTurn(
     }
   }
 
-  // 3. Tree Hazards & ANSI Z133 classification
+  // 3. Tree Scope & Front Desk Site Notes
   const hazardCheck = classifyArboristHazards(text);
   if (hazardCheck.hazards.overhead) next.hazards.overhead = true;
   if (hazardCheck.hazards.structures) next.hazards.structures = true;
@@ -123,14 +123,14 @@ export function processCustomerCallTurn(
   let isEmergencyAlert = false;
   let arbEReply = "";
 
-  // Emergency safety priority: If overhead power lines or active wire hazard mentioned, speak ANSI Z133 warning first!
+  // Front Desk note if wires or emergency mentioned
   if (next.hazards.overhead && !next.safetyWarningSpoken) {
     next.safetyWarningSpoken = true;
     next.urgency = 'Emergency';
     next.serviceType = 'Emergency';
     isEmergencyAlert = true;
     arbEReply = 
-      "⚠️ Important safety warning from Arb-E! If any tree limb is touching or near active utility wires, please stand clear by at least 35 feet and contact Georgia Power or Alabama Power immediately. I am logging this as a critical emergency dispatch for our certified arborist crew right now. Do you have a gate latch or pets in the yard we should be aware of?";
+      "Understood! I've flagged the wire contact as an urgent note in your file for our field arborist. Do you have a gate code, latch, or any pets in the yard our crew should know about?";
     next.step = 'access_schedule';
     return { updatedState: next, arbEReply, isEmergencyAlert };
   }
@@ -139,27 +139,27 @@ export function processCustomerCallTurn(
   if (!next.clientName || !next.address) {
     next.step = 'service_address';
     if (!next.clientName && !next.address) {
-      arbEReply = "Thanks! Could you please share your name and property address in Columbus or Phenix City so I can pull up your neighborhood canopy map?";
+      arbEReply = "Thanks! Could you please share your name and property address in Columbus or Phenix City so I can get your file started?";
     } else if (!next.clientName) {
-      arbEReply = `Got the address at ${next.address}! May I get your full name and the best callback number?`;
+      arbEReply = `Got the address at ${next.address}! May I get your full name and best callback number?`;
     } else {
       arbEReply = `Great to meet you, ${next.clientName}! What is the service street address for the trees?`;
     }
   } else if (!next.serviceType || (!next.treeSpecies && !next.treeCount)) {
     next.step = 'service_address';
-    arbEReply = `Thanks, ${next.clientName}! What kind of tree work do you need done at ${next.address} — are you looking for a hazardous tree removal, deadwood pruning, storm cleanup, or a tree health assessment?`;
+    arbEReply = `Thanks, ${next.clientName}! What kind of tree work do you need done at ${next.address} — are you looking for tree removal, pruning, storm cleanup, or a tree health assessment?`;
   } else if (!next.hazards.overhead && !next.hazards.structures && !lower.includes('no lines') && !lower.includes('clear')) {
     next.step = 'hazard_check';
-    arbEReply = "Safety is our top priority at GreenTree. Are there any overhead electrical power lines near the branches, or are buildings, fences, or roofs within the tree's fall zone?";
+    arbEReply = "Got it! Are there any site obstacles our arborist should note before visiting, such as utility lines near the branches, fences, or roofs nearby?";
   } else if (!next.accessNotes && !next.petAlerts && !lower.includes('no gate') && !lower.includes('no pets') && !lower.includes('open access')) {
     next.step = 'access_schedule';
-    arbEReply = "Got that noted! How is property access for our bucket truck or crew? Is there a backyard gate latch or code, and are there any friendly dogs on site we should know about?";
+    arbEReply = "Got that noted! How is property access for our arborist? Is there a backyard gate latch or code, and are there any pets on site?";
   } else {
     // Flow complete!
     next.step = 'confirmed';
     next.percentComplete = 100;
     const speciesText = next.treeSpecies?.join(', ') || 'tree';
-    arbEReply = `Tree-mendous! 🐒 I've got everything locked in for your ${next.serviceType || 'tree service'} for the ${speciesText} at ${next.address}. Our certified arborist dispatch has been notified and will call you at ${next.phone} to confirm the inspection window. Have a tree-mendous day!`;
+    arbEReply = `Tree-mendous! 🐒 I've captured your inquiry for ${next.serviceType || 'tree service'} (${speciesText}) at ${next.address}. I am forwarding your lead directly to our GreenTree Arboriculture Management field workflow now!`;
   }
 
   return { updatedState: next, arbEReply, isEmergencyAlert };
@@ -186,7 +186,7 @@ export function convertCallToVoiceLead(
     serviceType,
     urgency,
     rawTranscript,
-    aiSummary: `Live phone call handled by Arb-E: ${serviceType} request at ${address}. ANSI Z133: ${state.hazards.overhead ? 'Overhead wires present' : 'Ground clear'}. ${state.accessNotes || ''} ${state.petAlerts || ''}`.trim(),
+    aiSummary: `Front Desk intake by Arb-E: ${serviceType} request for ${clientName} at ${address}. Notes: ${state.accessNotes || 'Standard access'}. Pets: ${state.petAlerts || 'None'}. Forwarded to GreenTree Arboriculture Management workflow.`.trim(),
     treeSpecies: state.treeSpecies && state.treeSpecies.length > 0 ? state.treeSpecies : ['Southern Canopy Tree'],
     treeCount: state.treeCount || 1,
     hazards: state.hazards,

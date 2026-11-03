@@ -66,8 +66,8 @@ export function findMatchingContact(
 }
 
 /**
- * ANSI Z133 Arborist Hazard Rule Classifier
- * Detects overhead wires, structure hazards, traffic, underground utilities, steep terrain
+ * Front Desk Site & Property Condition Classifier
+ * Detects overhead wires, structure proximity, traffic, underground utilities, steep terrain
  */
 export function classifyArboristHazards(text: string): {
   hazards: TreeHazards;
@@ -185,7 +185,7 @@ export function classifyArboristHazards(text: string): {
       traffic,
       underground,
       steepTerrain,
-      details: hazardDetails.join('; ') || 'No critical ANSI Z133 physical hazards reported.',
+      details: hazardDetails.join('; ') || 'Standard site conditions reported.',
     },
     isEmergency,
     detectedSpecies: Array.from(new Set(detectedSpecies)),

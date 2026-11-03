@@ -5,7 +5,7 @@ import { VoicemailPlayer } from './components/VoicemailPlayer';
 import { ExtractionInspector } from './components/ExtractionInspector';
 import { LeadsBoard } from './components/LeadsBoard';
 import { ContactsView } from './components/ContactsView';
-import { HazardAssessmentView } from './components/HazardAssessmentView';
+import { ArboristWorkflowHandoffView } from './components/ArboristWorkflowHandoffView';
 import { LiveAuditFeed } from './components/LiveAuditFeed';
 import { RecordVoicemailModal } from './components/RecordVoicemailModal';
 import { LiveCallSimulator } from './components/LiveCallSimulator';
@@ -355,6 +355,28 @@ export default function App() {
   };
 
   /**
+   * Forward qualified lead from front desk to GreenTree Arboriculture Management field team
+   */
+  const handleForwardLead = (leadId: string, assignedEstimator: string, notes: string) => {
+    setLeads((prev) =>
+      prev.map((l) => {
+        if (l.id === leadId) {
+          const newAct: Activity = {
+            id: `act-${Date.now()}`,
+            type: 'JOB',
+            message: `Front Desk forwarded lead ${leadId} (${l.clientName}) to GreenTree Arboriculture Management workflow. Assigned estimator: ${assignedEstimator}.`,
+            timestamp: new Date().toISOString(),
+            user: 'Arb-E Front Desk',
+          };
+          setActivities((acts) => [newAct, ...acts]);
+          return { ...l, status: 'ESTIMATE_SCHEDULED' };
+        }
+        return l;
+      })
+    );
+  };
+
+  /**
    * Open the live phone call answering modal with Arb-E
    */
   const handleOpenLiveCall = (caller?: { name: string; phone: string }) => {
@@ -475,7 +497,7 @@ export default function App() {
                 )}
               </div>
 
-              {/* Right: Arborist Extraction & ANSI Z133 Safety Assessment */}
+              {/* Right: Front Desk Extraction & Site Notes */}
               <div className="lg:col-span-4 h-full min-h-[350px]">
                 {selectedVoicemail && (
                   <ExtractionInspector
@@ -514,9 +536,9 @@ export default function App() {
             />
           )}
 
-          {/* Tab 4: ANSI Z133 Safety & Hazards */}
+          {/* Tab 4: Forward to GreenTree Arboriculture Management Workflow */}
           {activeTab === 'hazards' && (
-            <HazardAssessmentView
+            <ArboristWorkflowHandoffView
               leads={leads}
               onSelectLead={(leadId) => {
                 const matchedVm = voicemails.find((v) => v.leadId === leadId);
@@ -525,6 +547,7 @@ export default function App() {
                   setActiveTab('inbox');
                 }
               }}
+              onForwardLead={handleForwardLead}
             />
           )}
 

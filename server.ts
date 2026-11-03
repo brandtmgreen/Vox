@@ -29,7 +29,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// Mandatory Port 3000 for AI Studio environment (avoids collision with GCP Container internal port 8080)
+const PORT = 3000;
 
 app.use(express.json({ limit: '25mb' }));
 
@@ -180,7 +181,8 @@ if (apiKey && apiKey !== 'MY_GEMINI_API_KEY') {
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({
     status: 'ok',
-    brand: 'GreenTree Arboriculture Management',
+    brand: 'GreenTree Front Desk',
+    workflow: 'GreenTree Arboriculture Management',
     assistant: 'Arb-E 🐒',
     hasApiKey: Boolean(apiKey),
     timestamp: new Date().toISOString(),
@@ -268,7 +270,7 @@ app.post('/api/call/converse', async (req: Request, res: Response) => {
 
     if (aiClient && !turn.isEmergencyAlert && updatedState.step !== 'confirmed') {
       try {
-        const prompt = `You are Arb-E 🐒, the certified virtual arborist assistant for GreenTree Arboriculture (Columbus, GA & Phenix City, AL).
+        const prompt = `You are Arb-E 🐒, the friendly voice receptionist for GreenTree Front Desk (Columbus, GA & Phenix City, AL), capturing customer inquiries to forward to the GreenTree Arboriculture Management field arborist workflow.
 Customer said: "${message}"
 
 Current gathered CRM state:
@@ -276,14 +278,14 @@ Current gathered CRM state:
 - Address: ${updatedState.address || 'Not yet known'}
 - Service: ${updatedState.serviceType || 'Not yet specified'}
 - Species/Trees: ${updatedState.treeSpecies?.join(', ') || 'Unknown'} (${updatedState.treeCount || 1} trees)
-- Hazards: Overhead wires: ${updatedState.hazards.overhead ? 'YES' : 'No'}, Structures: ${updatedState.hazards.structures ? 'YES' : 'No'}
+- Site Notes: Overhead lines nearby: ${updatedState.hazards.overhead ? 'YES' : 'No'}, Structures: ${updatedState.hazards.structures ? 'YES' : 'No'}
 - Gate/Access: ${updatedState.accessNotes || 'Unknown'}
 - Pets: ${updatedState.petAlerts || 'Unknown'}
 - Target next step: ${updatedState.step}
 
 Arb-E rule guidance: ${turn.arbEReply}
 
-Respond as Arb-E in 1 to 2 warm, friendly, concise sentences. Use a light tree/monkey pun if natural ("branch out", "go out on a limb", "tree-mendous"), but prioritize gathering the missing info for the arborist dispatch.`;
+Respond as Arb-E in 1 to 2 warm, friendly front-desk sentences. Focus on capturing customer contact details, address, gate/pet access, and preparing the lead package for the on-site GreenTree Arboriculture Management team.`;
 
         const timeoutPromise = new Promise<never>((_, reject) =>
           setTimeout(() => reject(new Error('Gemini API timeout')), 10000)
@@ -474,20 +476,20 @@ app.post('/api/voicemail/process', async (req: Request, res: Response) => {
     // Use Gemini with the exact System Prompt from Section 3 if client is initialized
     if (aiClient) {
       try {
-        const systemPrompt = `You are the ArborLink Voice Intelligence Parser for GreenTree Arboriculture (Columbus, GA / Phenix City, AL).
-Analyze the following phone call audio transcript or voicemail. Extract the customer information, tree service requirements, and safety hazards into strict JSON.
+        const systemPrompt = `You are the Front Desk Voice Intelligence Parser for GreenTree Front Desk (Columbus, GA / Phenix City, AL).
+Analyze the following phone call audio transcript or voicemail. Extract customer contact information, tree service requirements, and front-desk property site notes into strict JSON to forward to GreenTree Arboriculture Management.
 
 Follow these rules:
 1. Normalize phone numbers to (XXX) XXX-XXXX or +1XXXXXXXXXX.
 2. If service address is missing but city is mentioned, populate city and state.
 3. Classify serviceType into strictly one of: "Removal", "Pruning", "Plant Health", "Emergency", "Consulting".
 4. Classify urgency into strictly one of: "Emergency", "High", "Medium", "Low".
-5. Detect arborist-specific hazards according to ANSI Z133 guidelines:
-   - overhead wires
+5. Note property conditions for the field arborist inspection:
+   - overhead wires nearby
    - proximity to houses or roofs
-   - tree species (Pines, Oaks, Pecans, Sweetgums, Magnolias)
-   - defects (hollow, rot, uprooted, storm damaged, fungal conks)
-   - access limitations (narrow gate, septic tank, soft turf)
+   - tree species mentioned (Pines, Oaks, Pecans, Sweetgums, Magnolias)
+   - caller stated conditions (hollow, rot, uprooted, storm damaged, leaning)
+   - access limitations (narrow gate, locked gate, septic tank, soft turf)
 6. Extract pet warnings or gate codes into special instructions.`;
 
         const extractionTimeout = new Promise<never>((_, reject) =>
@@ -560,7 +562,7 @@ Follow these rules:
           extractedData = JSON.parse(rawJson);
         }
       } catch (geminiErr: any) {
-        console.info('[Arb-E Extraction] Completed parsing via ANSI Z133 heuristic rules:', geminiErr?.message || 'Ready');
+        console.info('[Arb-E Extraction] Completed parsing via front desk intake rules:', geminiErr?.message || 'Ready');
       }
     }
 
@@ -645,12 +647,102 @@ Follow these rules:
   }
 });
 
+// Route to render 1024x500 Feature Graphic standalone for Play Store asset export
+app.get('/api/feature-graphic', (_req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'playstore-feature-graphic.svg'));
+});
+
+// Play Store Mandatory Privacy Policy (Served as clean standalone HTML for Google Play review & web visitors)
+app.get(['/privacy', '/api/privacy'], (_req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - GreenTree ArborLink</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1917; background-color: #fafaf9; margin: 0; padding: 24px; }
+    .container { max-width: 800px; margin: 0 auto; background: #ffffff; padding: 36px 32px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #e7e5e4; }
+    .header { border-bottom: 2px solid #5FA136; padding-bottom: 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .brand { font-size: 22px; font-weight: 800; color: #376E20; display: flex; align-items: center; gap: 8px; }
+    .tag { background: #E8F5E9; color: #2E7D32; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+    h1 { font-size: 26px; color: #1c1917; margin: 0 0 8px 0; }
+    h2 { font-size: 18px; color: #292524; margin-top: 24px; margin-bottom: 8px; border-left: 4px solid #5FA136; padding-left: 10px; }
+    p, li { font-size: 14px; color: #44403c; }
+    ul { padding-left: 20px; }
+    .badge-box { background: #f5f5f4; border-radius: 10px; padding: 14px; margin: 16px 0; font-size: 13px; border-left: 4px solid #376E20; }
+    .footer { margin-top: 36px; padding-top: 16px; border-top: 1px solid #e7e5e4; font-size: 12px; color: #78716c; text-align: center; }
+    a { color: #376E20; font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">
+        <span>🌲 GreenTree ArborLink</span>
+      </div>
+      <span class="tag">Google Play Store Compliant</span>
+    </div>
+
+    <h1>Privacy Policy</h1>
+    <p><strong>Effective Date:</strong> November 1, 2026 &bull; <strong>Version:</strong> 1.0.0</p>
+    <p>GreenTree Arboriculture Management LLC ("GreenTree", "we", "us", or "our") built the <strong>GreenTree Front Desk</strong> mobile application (Package: <code>com.greentree.frontdesk</code>) as a voice intake, customer data capture, and lead forwarding platform for front desk staff and dispatchers serving Columbus, Georgia and Phenix City, Alabama.</p>
+
+    <div class="badge-box">
+      <strong>Core Commitment:</strong> We respect your privacy. GreenTree Front Desk does not sell customer or client data to advertisers, brokers, or third parties. All collected data is strictly utilized to capture caller inquiries, log property site notes, and forward qualified leads to the GreenTree Arboriculture Management field arborist workflow.
+    </div>
+
+    <h2>1. Information We Collect</h2>
+    <ul>
+      <li><strong>Audio Recordings &amp; Voice Streams (Microphone Permission):</strong> When using the Arb-E Voice Agent, the app accesses your device microphone (<code>RECORD_AUDIO</code>) solely during an active phone call simulation or voice memo capture. Audio is processed for real-time transcription and caller details extraction. Audio is never recorded secretly in the background.</li>
+      <li><strong>Client &amp; Job Intake Details:</strong> When leads or voicemails are logged, we record caller names, callback phone numbers, job site service addresses, target tree species, tree count, and front-desk site notes (powerline proximity, roof structures, gate codes, pet alerts).</li>
+      <li><strong>Telephony &amp; Dialer Usage:</strong> With your direct permission, the app can open your device's native telephone dialer (<code>CALL_PHONE</code> / <code>ACTION_DIAL</code>) to initiate return phone calls to tree service clients.</li>
+      <li><strong>Device Hardware &amp; Diagnostic Info:</strong> We access local device vibration (<code>VIBRATE</code>) for tactical incoming call alert haptic feedback, and network connectivity state (<code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code>) for CRM synchronization.</li>
+    </ul>
+
+    <h2>2. How We Use Information</h2>
+    <ul>
+      <li>To transcribe customer voicemails and categorize emergency storm inquiries vs routine pruning requests.</li>
+      <li>To record property conditions, gate codes, and access notes so on-site arborists arrive prepared.</li>
+      <li>To automatically forward qualified customer leads into the GreenTree Arboriculture Management field workflow.</li>
+      <li>To provide offline-first operational persistence when front desk dispatchers work in varying connectivity environments.</li>
+    </ul>
+
+    <h2>3. AI Processing &amp; Third-Party Services</h2>
+    <p>Voice transcription and natural language entity extraction utilize the Google Gemini API (Google Cloud). Data passed to Google Cloud is transmitted over encrypted TLS 1.3 connections and is not used to train public machine learning models in accordance with Google Cloud enterprise privacy standards.</p>
+
+    <h2>4. Data Retention, Security &amp; Deletion Rights</h2>
+    <p>All CRM leads, contacts, and activity audit trails are stored securely with enterprise-grade encryption in transit and at rest. You retain full control over your data. You may request full deletion of any lead record, contact, or audio transcript at any time by contacting us.</p>
+
+    <h2>5. Contact &amp; Data Protection Officer</h2>
+    <p>If you have any questions regarding this Privacy Policy or wish to request data deletion, contact us directly:</p>
+    <ul>
+      <li><strong>Developer:</strong> GreenTree Arboriculture Management LLC</li>
+      <li><strong>Official Contact Email:</strong> <a href="mailto:braandtgreen@gmail.com">braandtgreen@gmail.com</a></li>
+      <li><strong>Headquarters:</strong> Columbus, GA & Phenix City, AL</li>
+      <li><strong>App Package:</strong> <code>com.greentree.frontdesk</code></li>
+    </ul>
+
+    <div class="footer">
+      &copy; 2026 GreenTree Arboriculture Management LLC. All rights reserved. &bull; <a href="/">Return to GreenTree ArborLink App</a>
+    </div>
+  </div>
+</body>
+</html>`);
+});
+
 // Setup Vite middlewares in development or static serve in production
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
-      server: { middlewareMode: true, hmr: false },
+      server: { 
+        middlewareMode: true, 
+        hmr: false,
+        ws: false,
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -661,9 +753,14 @@ async function startServer() {
     });
   }
 
-  const listenPort = Number(PORT) || 3000;
-  app.listen(listenPort, '0.0.0.0', () => {
+  const listenPort = PORT;
+  const server = app.listen(listenPort, '0.0.0.0', () => {
     console.log(`GreenTree ArborLink Operations Server running on http://0.0.0.0:${listenPort}`);
+  });
+
+  server.on('error', (err: any) => {
+    console.error('Fatal HTTP server listen error:', err);
+    process.exit(1);
   });
 }
 

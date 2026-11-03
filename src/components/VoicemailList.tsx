@@ -106,7 +106,7 @@ export const VoicemailList: React.FC<VoicemailListProps> = ({
                 : 'bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200'
             }`}
           >
-            🚨 Emergency (Z133)
+            🚨 Priority Leads
           </button>
           <button
             onClick={() => setFilterType('synced')}

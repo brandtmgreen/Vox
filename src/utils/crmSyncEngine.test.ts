@@ -14,7 +14,7 @@ test('normalizePhoneNumber handles various formats correctly', () => {
   assert.equal(normalizePhoneNumber('334.555.0199'), '3345550199');
 });
 
-test('classifyArboristHazards detects ANSI Z133 electrical and structural hazards', () => {
+test('classifyArboristHazards detects electrical and structural property conditions', () => {
   const emergencyTranscript = "A massive red oak branch snapped. It's hanging directly over our power drop and resting on the garage roof.";
   const classification = classifyArboristHazards(emergencyTranscript);
 

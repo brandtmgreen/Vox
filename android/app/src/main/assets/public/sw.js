@@ -92,25 +92,40 @@ define(['./workbox-afac4cd2'], (function (workbox) { 'use strict';
     "url": "pwa-192x192.png",
     "revision": "ac1af30a4395958f2801e4b6f5a9dfaa"
   }, {
+    "url": "playstore-screenshot-1.png",
+    "revision": "652768911d31c8ef7a2ba153401214a7"
+  }, {
+    "url": "playstore-icon-512.png",
+    "revision": "88b147fe00c2cc5ae31ebee817afab8a"
+  }, {
+    "url": "playstore-feature-graphic.svg",
+    "revision": "3b789b54344106cf1837d74cdfce43a8"
+  }, {
+    "url": "playstore-feature-graphic.png",
+    "revision": "652768911d31c8ef7a2ba153401214a7"
+  }, {
     "url": "index.html",
-    "revision": "a585bf2aaefcb4d3dc0e327420a361ff"
+    "revision": "23d6c5b55daa6463d2b5b1b60a340b25"
   }, {
     "url": "icon.svg",
     "revision": "74fdbb0948ee52908571f838be75dc53"
   }, {
+    "url": "feature-graphic.html",
+    "revision": "c6787dd7f30ddf31b5da8608fc1e3421"
+  }, {
     "url": "apple-touch-icon.png",
     "revision": "dfea124b126f343d2047d1e61b6151bf"
   }, {
-    "url": "assets/web-CM0X0D-z.js",
+    "url": "assets/web-DzPpbf-k.js",
     "revision": null
   }, {
-    "url": "assets/web-BXN636Or.js",
+    "url": "assets/web-D6gxNkzk.js",
     "revision": null
   }, {
-    "url": "assets/index-hZFtggXI.js",
+    "url": "assets/index-DbI7mRwU.js",
     "revision": null
   }, {
-    "url": "assets/index-CwaDuomI.css",
+    "url": "assets/index-B9rZMelj.css",
     "revision": null
   }, {
     "url": "apple-touch-icon.png",

@@ -77,7 +77,7 @@ export const SpecModal: React.FC<SpecModalProps> = ({ isOpen, onClose }) => {
               </span>
             </div>
             <p className="text-[11px] text-stone-600">
-              Ingests raw transcripts, caller IDs, ANSI Z133 electrical hazard flags, and pet alerts. Automatically deduplicates contacts by E.164 phone and dispatches to operations.
+              Ingests raw transcripts, caller IDs, property site notes, and pet alerts. Automatically deduplicates contacts by E.164 phone and queues leads for GreenTree Arboriculture Management field estimators.
             </p>
           </div>
 

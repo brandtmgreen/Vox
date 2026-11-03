@@ -357,9 +357,9 @@ export const LiveInteractiveCallModal: React.FC<LiveInteractiveCallModalProps> =
             </div>
 
             <div className="p-4 rounded-2xl bg-[#376E20]/25 border border-[#5FA136]/40 max-w-md text-xs text-stone-200 text-left">
-              <p className="font-bold text-[#A8D672] mb-1">🌲 Automated Arb-E Answering Engine:</p>
+              <p className="font-bold text-[#A8D672] mb-1">🌲 Automated Arb-E Front Desk Receptionist:</p>
               <p className="leading-relaxed">
-                Arb-E will answer this call live, greet the customer with ISA arborist expertise, gather property details and ANSI Z133 safety hazards, and update GreenTree CRM in real time!
+                Arb-E will answer this call live at the front desk, greet the customer, capture their contact &amp; tree service details, and queue the lead for GreenTree Arboriculture Management workflow handoff!
               </p>
             </div>
 
@@ -534,15 +534,15 @@ export const LiveInteractiveCallModal: React.FC<LiveInteractiveCallModalProps> =
                   />
                 </div>
 
-                {/* Emergency Warning Banner if power lines detected */}
+                {/* Site Notes banner */}
                 {callState.hazards.overhead && (
-                  <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-600 text-xs text-rose-200 mb-3 space-y-1">
-                    <div className="flex items-center gap-1.5 font-bold text-rose-300 text-[11px]">
-                      <Zap className="w-4 h-4 text-rose-400" />
-                      <span>ANSI Z133 ELECTRICAL HAZARD DETECTED</span>
+                  <div className="p-3 rounded-xl bg-amber-950/80 border border-amber-600 text-xs text-amber-200 mb-3 space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-amber-300 text-[11px]">
+                      <Zap className="w-4 h-4 text-amber-400" />
+                      <span>UTILITY LINES NOTED NEAR CANOPY</span>
                     </div>
-                    <p className="text-[10px] leading-tight text-rose-200">
-                      Power drop lines reported near canopy. Mandatory 35ft clearance warning triggered.
+                    <p className="text-[10px] leading-tight text-amber-200">
+                      Caller mentioned lines or storm damage. Flagged in customer file for on-site arborist inspection.
                     </p>
                   </div>
                 )}
@@ -596,14 +596,14 @@ export const LiveInteractiveCallModal: React.FC<LiveInteractiveCallModalProps> =
                     )}
                   </div>
 
-                  {/* ANSI Z133 Site Hazards */}
+                  {/* Front Desk Site & Property Notes */}
                   <div className={`p-2.5 rounded-xl border flex items-center justify-between ${
                     callState.hazards.overhead || callState.hazards.structures ? 'bg-amber-950/40 border-amber-600/50 text-amber-200' : 'bg-stone-900 border-stone-800 text-stone-500'
                   }`}>
                     <div className="flex items-center gap-2 truncate">
-                      <ShieldAlert className={`w-3.5 h-3.5 ${callState.hazards.overhead ? 'text-rose-400' : 'text-amber-400'}`} />
+                      <ShieldAlert className={`w-3.5 h-3.5 ${callState.hazards.overhead ? 'text-amber-400' : 'text-stone-400'}`} />
                       <span className="truncate">
-                        {callState.hazards.overhead ? 'Power Line Risk ⚡' : callState.hazards.structures ? 'Structures in Fall Zone' : 'ANSI Z133 Safety Check'}
+                        {callState.hazards.overhead ? 'Wires Noted Nearby' : callState.hazards.structures ? 'Near House/Roof' : 'Site Notes Clean'}
                       </span>
                     </div>
                     {callState.hazards.overhead || callState.hazards.structures ? (
@@ -661,9 +661,9 @@ export const LiveInteractiveCallModal: React.FC<LiveInteractiveCallModalProps> =
               <span className="text-[11px] uppercase tracking-widest text-[#A8D672] font-black block mb-1">
                 Call Handled Live by Arb-E 🐒
               </span>
-              <h2 className="text-xl font-black text-white">Lead Successfully Ingested into CRM!</h2>
+              <h2 className="text-xl font-black text-white">Lead Successfully Captured at Front Desk!</h2>
               <p className="text-xs text-stone-300 max-w-md mt-1">
-                Customer "{callState.clientName || callerName}" has been logged in the Operations Dispatch board. All tree species and ANSI Z133 safety hazards were recorded.
+                Customer "{callState.clientName || callerName}" has been logged and queued for GreenTree Arboriculture Management field arborist workflow.
               </p>
             </div>
 
@@ -671,7 +671,7 @@ export const LiveInteractiveCallModal: React.FC<LiveInteractiveCallModalProps> =
               <div><strong>Client:</strong> {callState.clientName || callerName}</div>
               <div><strong>Service:</strong> {callState.serviceType || 'Tree Service'} ({callState.treeSpecies?.[0] || 'Tree'})</div>
               <div><strong>Address:</strong> {callState.address || 'Columbus, GA'}</div>
-              <div><strong>Power Lines:</strong> {callState.hazards.overhead ? '⚡ YES (ANSI Z133 Warning Spoken)' : 'No'}</div>
+              <div><strong>Desk Notes:</strong> {callState.hazards.overhead ? '⚡ Tree near utility lines noted' : 'Standard property access'}</div>
             </div>
 
             <button

@@ -133,11 +133,11 @@ export const LeadsBoard: React.FC<LeadsBoardProps> = ({
                           </span>
                         </div>
 
-                        {/* Hazards badge if present */}
+                        {/* Site notes badge if present */}
                         {hasOverhead && (
-                          <div className="flex items-center gap-1 text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                            <Zap className="w-3 h-3" />
-                            <span>ANSI Z133: Power Lines</span>
+                          <div className="flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                            <Zap className="w-3 h-3 text-amber-600" />
+                            <span>Site Note: Lines Nearby</span>
                           </div>
                         )}
 

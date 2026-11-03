@@ -41,7 +41,7 @@ export const LiveAuditFeed: React.FC<LiveAuditFeedProps> = ({ logs }) => {
           <div>
             <h2 className="font-extrabold text-[#4D2809] text-base">Arb-E Voice Operations Ledger</h2>
             <p className="text-xs text-stone-500 font-medium">
-              Live audit trail of call recordings, ANSI Z133 hazard classifications, and CRM dispatches
+              Live audit trail of call recordings, lead qualifications, and GreenTree Arboriculture Management workflow dispatches
             </p>
           </div>
         </div>

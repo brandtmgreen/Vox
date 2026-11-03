@@ -3,7 +3,7 @@ import {
   Inbox, 
   TrendingUp, 
   Users, 
-  ShieldAlert, 
+  Send, 
   Activity,
   PhoneCall
 } from 'lucide-react';
@@ -42,10 +42,10 @@ export const AndroidBottomNav: React.FC<AndroidBottomNavProps> = ({
     },
     {
       tab: 'leads',
-      label: 'Dispatch',
+      label: 'Leads',
       icon: TrendingUp,
       count: leadCount,
-      badgeColor: 'bg-indigo-600',
+      badgeColor: 'bg-emerald-700',
     },
     {
       tab: 'contacts',
@@ -54,10 +54,10 @@ export const AndroidBottomNav: React.FC<AndroidBottomNavProps> = ({
     },
     {
       tab: 'hazards',
-      label: 'Hazards',
-      icon: ShieldAlert,
-      count: hazardCount,
-      badgeColor: 'bg-red-500',
+      label: 'Handoff',
+      icon: Send,
+      count: leadCount,
+      badgeColor: 'bg-emerald-600',
     },
     {
       tab: 'audit',
